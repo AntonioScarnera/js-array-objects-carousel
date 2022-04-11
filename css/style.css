@@ -76,3 +76,9 @@
 .prev {
   bottom: -20px;
 }
+
+.buttons{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

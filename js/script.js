@@ -81,37 +81,45 @@ thumbsContainer.innerHTML += thumbTemplate;
 const next = document.querySelector(" .fa-circle-chevron-down");
 const prev = document.querySelector(" .fa-circle-chevron-up");
 
-function slideDown() {
 
-  //prendere immagine con currentIndexActive e togliere classe active
-  const imgs = document.getElementsByClassName("item");
-  imgs[currentIndexActive].classList.remove("active");
-  const thumbs = document.getElementsByClassName("thumb");
-  thumbs[currentIndexActive].classList.remove("active");
-  if (currentIndexActive === 4) {
-    currentIndexActive = 0;
-  } else {
-    currentIndexActive++;
-  }
-  imgs[currentIndexActive].classList.add("active");
-  thumbs[currentIndexActive].classList.add("active");
-}
-function slideUp() {
+function slideUpDown() {
+  const direction = (this && this.id === 'inext') ? 'iNext' : 'iPrev';
 
   const imgs = document.getElementsByClassName("item");
   imgs[currentIndexActive].classList.remove("active");
   const thumbs = document.getElementsByClassName("thumb");
   thumbs[currentIndexActive].classList.remove("active");
-  if (currentIndexActive === 0) {
-    currentIndexActive = imageObj.length - 1;
-  } else {
-    currentIndexActive--;
+
+  if(direction === 'iNext'){
+    if (currentIndexActive === 0) {
+      currentIndexActive = imageObj.length - 1;
+    } else {
+      currentIndexActive--;
+    }
+  }else{
+
+    if (currentIndexActive === 4) {
+      currentIndexActive = 0;
+    } else {
+      currentIndexActive++;
+    }
   }
   imgs[currentIndexActive].classList.add("active");
   thumbs[currentIndexActive].classList.add("active");
 }
 
-next.addEventListener("click", slideDown);
-prev.addEventListener("click", slideUp);
+next.addEventListener("click", slideUpDown);
+prev.addEventListener("click", slideUpDown);
 
-setInterval(slideDown, 3000);
+
+const start = document.getElementById("start");
+const stop = document.getElementById("stop");
+
+
+start.addEventListener("click", ()=>{
+  let startLoop = setInterval(slideUpDown, 3000);
+
+  stop.addEventListener("click", ()=>{
+    clearInterval(startLoop);
+  })
+})
